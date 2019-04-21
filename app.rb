@@ -16,7 +16,7 @@ end
 
 post '/plus' do
   count = Count.first
-  count.number = count.number + 2
+  count.number = count.number + 3
   count.save
   redirect '/'
 end
