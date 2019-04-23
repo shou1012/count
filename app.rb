@@ -5,32 +5,42 @@ require './models/count.rb'
 
 before do
   if Count.all.size == 0
-    Count.create(number: 0)
+    Count.create(number: 0, title: "default")
   end
 end
 
 get '/' do
-  @number = Count.first.number
-  erb:index
+  @count = Count.all
+  erb :index
 end
 
-post '/plus' do
-  count = Count.first
+post '/plus/:id' do
+  count = Count.find_by(id: params[:id])
   count.number = count.number + 1
   count.save
   redirect '/'
 end
 
-post '/minus' do
-  count = Count.first
+post '/minus/:id' do
+  count = Count.find_by(id: params[:id])
   count.number = count.number - 1
   count.save
   redirect '/'
 end
 
-post '/clear' do
-  count = Count.first
+post '/clear/:id' do
+  count = Count.find_by(id: params[:id])
   count.number = 0
   count.save
+  redirect '/'
+end
+
+post '/add' do
+  Count.create(number: 0, title: params[:title])
+  redirect '/'
+end
+
+post '/delete/:id' do
+  Count.find_by(id: params[:id]).destroy
   redirect '/'
 end
