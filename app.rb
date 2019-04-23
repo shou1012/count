@@ -16,7 +16,21 @@ end
 
 post '/plus' do
   count = Count.first
-  count.number = count.number + 3
+  count.number = count.number + 1
+  count.save
+  redirect '/'
+end
+
+post '/minus' do
+  count = Count.first
+  count.number = count.number - 1
+  count.save
+  redirect '/'
+end
+
+post '/clear' do
+  count = Count.first
+  count.number = 0
   count.save
   redirect '/'
 end

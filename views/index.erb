@@ -7,8 +7,19 @@
 </head>
 <body>
   <h1><%= @number %></h1>
+  <form action="/add" method="POST">
+    <input type="text" value="+">
+    <input type="submit" value="+">
+  </form>
+  <h1><%= @number.title %></h1>
   <form action="/plus" method="POST">
     <input type="submit" value="+">
+  </form>
+  <form action="/minus" method="POST">
+    <input type="submit" value="-">
+  </form>
+  <form action="/clear" method="POST">
+    <input type="submit" value="clear">
   </form>
 </body>
 </html>
