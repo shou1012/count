@@ -2,29 +2,60 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Document</title>
-  <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <script>
+    $(document).ready(function() {
+      $("#open").on("click", function(e) {
+          e.preventDefault();
+          $("#overlay, #modal").addClass("active");
+
+          $("#close, #overlay").on("click", function() {
+              $("#overlay, #modal").removeClass("active");
+              return false;
+          });
+      });
+    });
+  </script>
 </head>
 <body>
-  <form action="/add" method="POST">
-    <input type="text" name="title">
-    <input type="submit" value="ENTER">
-  </form>
+  <nav>
+    <button type="submit" class="add" id="open"><img src="./assets/images/add.png" alt="add"></button>
+  </nav>
+  <div id="modal">
+    <form action="/add" method="POST">
+      <h1 class="modaltitle">メンバーを追加</h1>
+      <h1 class="modalsubtitle">名前を入力</h1>
+      <input type="text" name="title" class="select">
+      <input type="submit" value=" " class="enter">
+    </form>
+    <div>
+      <button id="close" class="close"><img src="./assets/images/delete.png" alt="close"></button>
+    </div>
+  </div>
+  <div id="overlay"></div>
+  <h1 class="toptitle">得点カウンター</h1>
   <% @count.each do |count| %>
-  <h1><%= count.number %></h1>
-  <h1><%= count.title %></h1>
-  <form action="/plus/<%= count.id %>" method="POST">
-    <input type="submit" value="+">
-  </form>
-  <form action="/minus/<%= count.id %>" method="POST">
-    <input type="submit" value="-">
-  </form>
-  <form action="/clear/<%= count.id %>" method="POST">
-    <input type="submit" value="clear">
-  </form>
+  <div class="member">
+    <h1 class="name"><%= count.title %></h1>
+    <div class="pm-btn">
+      <form action="/minus/<%= count.id %>" method="POST" class="minusbtn">
+        <input type="submit" value=" ">
+      </form>
+      <h1 class="score"><%= count.number %></h1>
+      <form action="/plus/<%= count.id %>" method="POST" class="plusbtn">
+        <input type="submit" value=" ">
+      </form>
+    </div>
+    <form action="/clear/<%= count.id %>" method="POST">
+      <input type="submit" value=" " class="clearbtn">
+    </form>
     <form action="/delete/<%= count.id %>" method="POST">
-    <input type="submit" value="delete">
-  </form>
+      <input type="submit" value=" " class="deletebtn">
+    </form>
+  </div>
   <% end %>
 </body>
 </html>
